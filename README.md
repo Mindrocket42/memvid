@@ -107,10 +107,14 @@ print(response)
 ### Building Memory from Documents
 ```python
 from memvid import MemvidEncoder
+from memvid.config import get_default_config
 import os
 
-# Load documents
-encoder = MemvidEncoder(chunk_size=512, overlap=50)
+# Load documents with custom chunk settings
+config = get_default_config()
+config["chunking"]["chunk_size"] = 512
+config["chunking"]["overlap"] = 50
+encoder = MemvidEncoder(config=config)
 
 # Add text files
 for file in os.listdir("documents"):
@@ -211,10 +215,13 @@ python book_chat.py
 ### Custom Embeddings
 ```python
 from sentence_transformers import SentenceTransformer
+from memvid.config import get_default_config
 
 # Use custom embedding model
-custom_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
-encoder = MemvidEncoder(embedding_model=custom_model)
+custom_model_name = 'sentence-transformers/all-mpnet-base-v2'
+config = get_default_config()
+config["embedding"]["model"] = custom_model_name
+encoder = MemvidEncoder(config=config)
 ```
 
 ### Video Optimization
@@ -230,12 +237,6 @@ encoder.build_video(
 )
 ```
 
-### Distributed Processing
-```python
-# Process large datasets in parallel
-encoder = MemvidEncoder(n_workers=8)
-encoder.add_chunks_parallel(massive_chunk_list)
-```
 
 ## 🐛 Troubleshooting
 
