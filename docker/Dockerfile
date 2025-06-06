@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:22.04
+FROM ubuntu:22.04
 
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -28,4 +28,4 @@ WORKDIR /workspace
 RUN mkdir -p /data/input /data/output /data/temp /scripts
 
 # Default command for testing
-CMD ["python3", "--version"]
+CMD ["sleep", "infinity"]
